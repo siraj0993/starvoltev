@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Starvolt EV – Zelio Electric Scooters | Jagatpur, Odisha</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#16a34a;--gd:#15803d;--gl:#dcfce7;--gx:#bbf7d0;--bg:#f8fafc;--white:#fff;--txt:#111827;--muted:#6b7280;--border:#e5e7eb;--r:14px;--sh:0 2px 16px rgba(0,0,0,.09);--nav:60px}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);font-size:15px;overflow-x:hidden;padding-bottom:70px}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:#0f3d27;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity .5s}
+#loader.gone{opacity:0;pointer-events:none}
+.loader-bar{width:180px;height:4px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden}
+.loader-fill{height:100%;background:#4ade80;border-radius:4px;animation:lfill 1.8s ease forwards}
+@keyframes lfill{from{width:0}to{width:100%}}
+
+/* TOP NAV */
+#topnav{position:fixed;top:0;left:0;right:0;z-index:200;background:#fff;border-bottom:1px solid var(--border);height:var(--nav);display:flex;align-items:center;padding:0 .75rem;gap:.5rem}
+.nav-logo{display:flex;align-items:center;gap:.35rem;text-decoration:none;cursor:pointer;flex-shrink:0}
+.nav-logo svg{flex-shrink:0}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1.15}
+.nav-logo-text span:first-child{font-size:.75rem;font-weight:800;letter-spacing:.06em;color:var(--g)}
+.nav-logo-text span:last-child{font-size:.56rem;font-weight:600;letter-spacing:.1em;color:var(--muted)}
+.nav-search{flex:1;position:relative;min-width:0}
+.nav-search input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:.42rem .75rem .42rem 2rem;font-size:.82rem;background:#f9fafb;outline:none;font-family:inherit;transition:border-color .2s}
+.nav-search input:focus{border-color:var(--g)}
+.nav-search svg{position:absolute;left:.6rem;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--muted)}
+.nav-btns{display:flex;gap:.35rem;flex-shrink:0;margin-left:auto}
+.nbtn{display:flex;align-items:center;gap:.25rem;border:none;border-radius:8px;padding:.42rem .7rem;font-size:.75rem;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap;font-family:inherit}
+.nbtn-dir{background:#dbeafe;color:#1d4ed8}
+.nbtn-call{background:var(--g);color:#fff}
+
+/* BOTTOM NAV */
+#botnav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#fff;border-top:1px solid var(--border);display:flex;height:62px}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;cursor:pointer;font-size:.62rem;color:var(--muted);font-family:inherit;font-weight:500;position:relative;transition:color .2s}
+.bn.active{color:var(--g)}
+.bn svg{width:20px;height:20px;stroke-width:1.8}
+.bn-dot{position:absolute;top:8px;right:calc(50% - 14px);width:7px;height:7px;background:#ef4444;border-radius:50%;border:2px solid #fff;display:none}
+.bn-dot.show{display:block}
+
+/* PAGES */
+main{margin-top:var(--nav)}
+.page{display:none;min-height:calc(100vh - var(--nav) - 62px)}
+.page.active{display:block}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#052e16 0%,#14532d 55%,#166534 100%);color:#fff;padding:1.6rem 1rem 2rem;overflow:hidden;position:relative}
+.hero-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:.28rem .85rem;font-size:.72rem;font-weight:700;letter-spacing:.06em;display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.75rem}
+.hero h1{font-size:1.7rem;font-weight:800;line-height:1.2;margin-bottom:.5rem}
+.hero h1 em{color:#86efac;font-style:normal}
+.hero-sub{font-size:.85rem;opacity:.8;margin-bottom:1.25rem;line-height:1.6}
+.hero-btns{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.hbtn{padding:.6rem 1.15rem;border-radius:10px;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;border:none}
+.hbtn-g{background:#4ade80;color:#052e16}
+.hbtn-w{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+
+/* WARRANTY BADGES IN HERO */
+.warranty-row{display:flex;gap:.6rem;flex-wrap:wrap}
+.w-badge{display:flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:.45rem .75rem}
+.w-badge-icon{font-size:1.1rem}
+.w-badge-text strong{display:block;font-size:.78rem;font-weight:800;color:#86efac;line-height:1.1}
+.w-badge-text span{font-size:.65rem;opacity:.8}
+
+.hero-stats{display:flex;gap:1.4rem;margin-top:1.25rem;flex-wrap:wrap}
+.hstat-num{font-size:1.3rem;font-weight:800;color:#86efac}
+.hstat-lbl{font-size:.67rem;opacity:.7;margin-top:.05rem}
+
+/* FILTER */
+.filter-scroll{overflow-x:auto;display:flex;gap:.5rem;padding:.85rem 1rem;scrollbar-width:none;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:var(--nav);z-index:100}
+.filter-scroll::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:.38rem .9rem;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:.78rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.chip.on{background:var(--gl);border-color:var(--g);color:var(--gd)}
+
+/* CARDS */
+.sec-head{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem .5rem;font-weight:700;font-size:.95rem}
+.sec-count{font-size:.8rem;color:var(--muted);font-weight:500}
+.cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;padding:0 1rem 1rem}
+@media(min-width:600px){.cards-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.cards-grid{grid-template-columns:repeat(4,1fr)}}
+.vcard{background:#fff;border-radius:var(--r);border:1.5px solid var(--border);overflow:hidden;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.vcard:active{transform:scale(.97)}
+.vcard:hover{box-shadow:var(--sh);border-color:var(--gx)}
+.vcard-img{background:linear-gradient(135deg,#f0fdf4,#dcfce7);padding:1rem .75rem .5rem;text-align:center;position:relative;min-height:130px;display:flex;align-items:center;justify-content:center}
+.vcard-img img{width:100%;max-width:150px;height:100px;object-fit:contain}
+.vbadge{position:absolute;top:.5rem;left:.5rem;font-size:.6rem;font-weight:700;padding:.2rem .45rem;border-radius:5px;text-transform:uppercase}
+.vbadge.green{background:var(--g);color:#fff}
+.vbadge.amber{background:#f59e0b;color:#fff}
+.vbadge.red{background:#ef4444;color:#fff}
+.vbadge.blue{background:#3b82f6;color:#fff}
+.vheart{position:absolute;top:.45rem;right:.45rem;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.vheart.liked{color:#ef4444}
+.vcard-body{padding:.7rem}
+.vcard-brand{font-size:.65rem;font-weight:700;color:var(--g);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.15rem}
+.vcard-name{font-size:.88rem;font-weight:700;color:var(--txt);margin-bottom:.5rem;line-height:1.3}
+.vcard-specs{display:flex;flex-direction:column;gap:.25rem;margin-bottom:.65rem}
+.vspec{display:flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--muted)}
+.vspec svg{width:11px;height:11px;color:var(--g);flex-shrink:0}
+.vcard-acts{display:flex;gap:.4rem}
+.vbtn{flex:1;border-radius:8px;padding:.45rem .3rem;font-size:.73rem;font-weight:700;font-family:inherit;cursor:pointer;border:none;text-align:center}
+.vbtn-g{background:var(--g);color:#fff}
+.vbtn-o{background:var(--gl);color:var(--gd);border:1.5px solid var(--gx)}
+
+/* WARRANTY STRIP ON CARD */
+.vcard-warranty{display:flex;align-items:center;gap:.3rem;background:#f0fdf4;border-top:1px solid var(--gx);padding:.35rem .7rem;font-size:.65rem;color:var(--gd);font-weight:600}
+
+/* DRAWER */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;opacity:0;pointer-events:none;transition:opacity .25s;display:flex;align-items:flex-end}
+@media(min-width:600px){.overlay{align-items:center;justify-content:center}}
+.overlay.open{opacity:1;pointer-events:all}
+.drawer{background:#fff;border-radius:20px 20px 0 0;width:100%;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);overscroll-behavior:contain}
+@media(min-width:600px){.drawer{border-radius:20px;max-width:760px;max-height:88vh;transform:scale(.93) translateY(20px)}}
+.overlay.open .drawer{transform:none}
+.drw-handle{width:36px;height:4px;background:var(--border);border-radius:4px;margin:.7rem auto .2rem}
+.drw-close{position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;background:#f3f4f6;border:none;font-size:1.1rem;cursor:pointer;z-index:10}
+.drw-inner{padding:0 1rem 2rem;position:relative}
+.d-img{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1rem}
+.d-img img{max-width:100%;max-height:180px;object-fit:contain}
+.d-brand{font-size:.7rem;font-weight:700;color:var(--g);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem}
+.d-name{font-size:1.35rem;font-weight:800;margin-bottom:.2rem}
+.d-tag{font-size:.82rem;color:var(--muted);margin-bottom:.85rem}
+.d-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem}
+.d-chip{background:var(--gl);color:var(--gd);border-radius:6px;padding:.22rem .6rem;font-size:.72rem;font-weight:600}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1rem}
+.spec-box{background:#f9fafb;border-radius:10px;padding:.65rem .75rem}
+.spec-lbl{font-size:.65rem;color:var(--muted);font-weight:500;margin-bottom:.1rem}
+.spec-val{font-size:.85rem;font-weight:700;color:var(--txt)}
+.d-warranty-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1rem}
+.d-warranty-box{border-radius:10px;padding:.7rem;text-align:center}
+.d-warranty-box.blue{background:linear-gradient(135deg,#1e3a5f,#1e4080);color:#fff}
+.d-warranty-box.green{background:linear-gradient(135deg,#052e16,#166534);color:#fff}
+.d-warranty-box .wi{font-size:1.4rem;margin-bottom:.25rem}
+.d-warranty-box strong{display:block;font-size:.82rem;font-weight:800;margin-bottom:.15rem}
+.d-warranty-box span{font-size:.68rem;opacity:.8;line-height:1.4}
+.d-ctas{display:flex;gap:.65rem;margin-top:.5rem}
+.d-cta{flex:1;border-radius:11px;padding:.7rem;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;border:none;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.d-cta-g{background:var(--g);color:#fff}
+.d-cta-w{background:var(--gl);color:var(--gd);border:1.5px solid var(--gx)}
+
+/* CONTACT */
+.pg-wrap{padding:1rem}
+.cblock{background:#fff;border-radius:var(--r);border:1px solid var(--border);padding:1.1rem;margin-bottom:.85rem}
+.cblock-title{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.85rem}
+.citem{display:flex;align-items:flex-start;gap:.85rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
+.citem:last-child{border:none}
+.cicon{width:38px;height:38px;border-radius:9px;background:var(--gl);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.ctext-lbl{font-size:.68rem;color:var(--muted);margin-bottom:.15rem}
+.ctext-val{font-size:.88rem;font-weight:600;color:var(--txt)}
+.ctext-val a{color:var(--g);text-decoration:none}
+.srow{display:flex;gap:.65rem;margin-top:.5rem}
+.sbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.65rem;border-radius:10px;text-decoration:none;font-size:.8rem;font-weight:700;border:none;cursor:pointer;font-family:inherit}
+.sbtn-fb{background:#1877f2;color:#fff}
+.sbtn-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+.sbtn-wa{background:#25d366;color:#fff}
+.sbtn-g{background:var(--g);color:#fff}
+
+/* FORMS */
+.form-card{background:#fff;border-radius:var(--r);border:1px solid var(--border);padding:1.1rem;margin-bottom:.85rem}
+.ftitle{font-size:1rem;font-weight:800;margin-bottom:.2rem}
+.fsub{font-size:.8rem;color:var(--muted);margin-bottom:1rem}
+.frow{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.85rem}
+.flbl{font-size:.78rem;font-weight:600;color:var(--txt)}
+.flbl span{color:#ef4444}
+.finput{border:1.5px solid var(--border);border-radius:9px;padding:.6rem .8rem;font-size:.9rem;font-family:inherit;color:var(--txt);outline:none;width:100%;background:#fff;transition:border-color .2s}
+.finput:focus{border-color:var(--g)}
+.finput.err{border-color:#ef4444}
+.fgrid2{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+.fsubmit{width:100%;background:var(--g);color:#fff;border:none;border-radius:11px;padding:.8rem;font-size:.95rem;font-weight:800;font-family:inherit;cursor:pointer;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.fsubmit:disabled{opacity:.6;cursor:not-allowed}
+.ferr{font-size:.72rem;color:#ef4444;margin-top:.2rem;display:none}
+.ferr.show{display:block}
+.fsuccess{background:#dcfce7;border:1.5px solid #86efac;border-radius:11px;padding:1.2rem;text-align:center;display:none;margin-bottom:.85rem}
+.fsuccess.show{display:block}
+
+/* CHARGING */
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.calc-row:last-child{border:none;font-weight:700;color:var(--g);font-size:.95rem}
+.tip-card{background:#fff;border-radius:var(--r);border:1px solid var(--border);padding:1rem;margin-bottom:.65rem;display:flex;gap:.85rem;align-items:flex-start}
+.tip-icon{width:40px;height:40px;background:var(--gl);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+
+/* ABOUT */
+.about-stat{background:#fff;border-radius:12px;border:1px solid var(--border);padding:.9rem;text-align:center}
+.about-stat-num{font-size:1.4rem;font-weight:800;color:var(--g)}
+.about-stat-lbl{font-size:.7rem;color:var(--muted);margin-top:.1rem}
+.feat-item{background:#fff;border-radius:12px;border:1px solid var(--border);padding:.9rem;display:flex;gap:.75rem;align-items:center;margin-bottom:.55rem}
+.feat-icon{font-size:1.3rem;width:42px;height:42px;background:var(--gl);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-title{font-size:.88rem;font-weight:700;margin-bottom:.15rem}
+.feat-text{font-size:.75rem;color:var(--muted);line-height:1.5}
+
+/* GALLERY SLIDESHOW */
+.gal-slideshow{position:relative;width:100%;background:#000;overflow:hidden;border-radius:12px}
+.gal-track{display:flex;transition:transform .5s ease;will-change:transform}
+.gal-slide{flex-shrink:0;width:100%;position:relative}
+.gal-slide img{width:100%;height:260px;object-fit:cover;display:block}
+.gal-slide-fb{width:100%;height:260px;background:linear-gradient(135deg,#052e16,#166534);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem}
+.gal-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.75),transparent);padding:.85rem .85rem .5rem;color:#fff;font-size:.75rem;font-weight:500}
+.gal-prev,.gal-next{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;font-size:1.2rem;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center}
+.gal-prev{left:.5rem}.gal-next{right:.5rem}
+.gal-dots{position:absolute;bottom:.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.3rem;z-index:10}
+.gal-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:all .3s;border:none}
+.gal-dot.on{width:18px;border-radius:4px;background:#4ade80}
+.gal-counter{position:absolute;top:.5rem;right:.6rem;background:rgba(0,0,0,.5);color:#fff;font-size:.7rem;font-weight:600;padding:.2rem .55rem;border-radius:20px;z-index:10}
+.gal-thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-top:3px}
+@media(min-width:500px){.gal-thumbs{grid-template-columns:repeat(7,1fr)}}
+.gal-thumb{aspect-ratio:1;overflow:hidden;cursor:pointer;border-radius:5px;border:2px solid transparent;transition:border-color .2s}
+.gal-thumb.on{border-color:var(--g)}
+.gal-thumb img{width:100%;height:100%;object-fit:cover}
+.gal-thumb-fb{width:100%;height:100%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+
+/* PROMO */
+.promo{background:linear-gradient(90deg,#052e16,#15803d);border-radius:var(--r);padding:1rem 1.1rem;margin:0 1rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+.promo-btn{background:#4ade80;color:#052e16;border:none;border-radius:8px;padding:.5rem .85rem;font-size:.78rem;font-weight:800;cursor:pointer;white-space:nowrap;font-family:inherit}
+
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(10px);background:#111827;color:#fff;padding:.6rem 1.2rem;border-radius:10px;font-size:.82rem;font-weight:500;z-index:900;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;max-width:92vw}
+.toast.up{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* WA FLOAT */
+.wa-btn{position:fixed;bottom:80px;right:1rem;z-index:300;width:52px;height:52px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,.4);animation:wap 2.5s infinite}
+@keyframes wap{0%,100%{box-shadow:0 4px 16px rgba(37,211,102,.4)}50%{box-shadow:0 4px 28px rgba(37,211,102,.7)}}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div style="color:#fff;font-size:2rem;font-weight:800">STARVOLT <span style="color:#4ade80">EV</span></div>
+  <div style="font-size:.8rem;color:rgba(255,255,255,.6)">Authorised Zelio Dealer · Jagatpur</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- TOP NAV -->
+<nav id="topnav">
+  <div class="nav-logo" onclick="showPage('home')">
+    <svg width="28" height="28" viewBox="0 0 40 40"><rect width="40" height="40" rx="8" fill="#16a34a"/><polygon points="22,5 10,22 20,22 18,35 30,18 20,18" fill="#fff"/></svg>
+    <div class="nav-logo-text"><span>STARVOLT</span><span>EVs · JAGATPUR</span></div>
+  </div>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input id="searchBox" type="search" placeholder="Search Zelio models…" oninput="handleSearch()" inputmode="search">
+  </div>
+  <div class="nav-btns">
+    <a class="nbtn nbtn-dir" href="https://maps.app.goo.gl/wg2P5rwNk2hXcF8RA" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Store
+    </a>
+    <a class="nbtn nbtn-call" href="tel:+917749984651">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l1.27-.76a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call
+    </a>
+  </div>
+</nav>
+
+<!-- BOTTOM NAV -->
+<nav id="botnav">
+  <button class="bn active" id="bn-home" onclick="showPage('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+  </button>
+  <button class="bn" id="bn-charging" onclick="showPage('charging')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Charging
+  </button>
+  <button class="bn" id="bn-wishlist" onclick="showPage('wishlist')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Wishlist
+    <span class="bn-dot" id="wishDot"></span>
+  </button>
+  <button class="bn" id="bn-contact" onclick="showPage('contact')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Contact
+  </button>
+  <button class="bn" id="bn-about" onclick="showPage('about')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>About
+  </button>
+</nav>
+
+<a class="wa-btn" href="https://wa.me/917749984651?text=Hi%20Starvolt%20EV%2C%20I%20am%20interested%20in%20Zelio%20scooters." target="_blank">💬</a>
+<div class="toast" id="toast"></div>
+
+<main>
+<!-- ════ HOME ════ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge">⚡ Authorised Zelio Dealer · Jagatpur, Odisha</div>
+    <h1>Ride the <em>Electric</em><br>Revolution</h1>
+    <p class="hero-sub">Explore all Zelio models at Starvolt EV. Book a free test ride and drive home your dream scooter today.</p>
+    <div class="hero-btns">
+      <button class="hbtn hbtn-g" onclick="document.getElementById('ms').scrollIntoView({behavior:'smooth'})">🛵 Browse Models</button>
+      <button class="hbtn hbtn-w" onclick="showPage('contact')">📅 Book Test Ride</button>
+    </div>
+    <!-- WARRANTY BADGES -->
+    <div class="warranty-row">
+      <div class="w-badge">
+        <div class="w-badge-icon">🛡️</div>
+        <div class="w-badge-text"><strong>2 Year Warranty</strong><span>Motor · Frame · Controller</span></div>
+      </div>
+      <div class="w-badge">
+        <div class="w-badge-icon">🔋</div>
+        <div class="w-badge-text"><strong>4 Year Battery</strong><span>Samsung Li-Ion cells</span></div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hstat-num">6+</div><div class="hstat-lbl">Zelio Models</div></div>
+      <div><div class="hstat-num">100+</div><div class="hstat-lbl">Happy Customers</div></div>
+      <div><div class="hstat-num">Free</div><div class="hstat-lbl">Test Ride</div></div>
+      <div><div class="hstat-num">₹0</div><div class="hstat-lbl">RTO (Low Speed)</div></div>
+    </div>
+  </div>
+
+  <div class="filter-scroll">
+    <div class="chip on" onclick="setFilter('all',this)">All Models</div>
+    <div class="chip" onclick="setFilter('lic-free',this)">🔓 No Licence</div>
+    <div class="chip" onclick="setFilter('lithium',this)">🔋 Lithium</div>
+    <div class="chip" onclick="setFilter('popular',this)">⭐ Popular</div>
+    <div class="chip" onclick="setFilter('high-range',this)">📍 120km+</div>
+    <div class="chip" onclick="setFilter('sporty',this)">🏍️ Sporty</div>
+  </div>
+
+  <div class="promo">
+    <div style="color:#fff"><strong style="font-size:.88rem;display:block;margin-bottom:.15rem">🎉 Free Test Ride – No Cost, No Commitment</strong><span style="font-size:.73rem;opacity:.8">Visit Bhairpur, Jagatpur showroom · Open 7 days</span></div>
+    <button class="promo-btn" onclick="showPage('contact')">Book Now</button>
+  </div>
+
+  <div id="ms">
+    <div class="sec-head"><span>Zelio Models</span><span class="sec-count" id="modelCount">6 available</span></div>
+    <div class="cards-grid" id="cardsGrid"></div>
+    <div style="text-align:center;padding:3rem 1rem;color:var(--muted);display:none" id="noResults"><div style="font-size:2.5rem;margin-bottom:.5rem">🔍</div><p>No models found</p></div>
+  </div>
+</div>
+
+<!-- ════ CHARGING ════ -->
+<div class="page" id="page-charging">
+  <div class="pg-wrap">
+    <div style="background:linear-gradient(135deg,#1e3a5f,#1e4080);color:#fff;border-radius:var(--r);padding:1.5rem;margin-bottom:1rem;text-align:center">
+      <div style="font-size:2.5rem;margin-bottom:.5rem">⚡</div>
+      <h2 style="font-size:1.2rem;font-weight:800;margin-bottom:.4rem">EV Charging Cost Calculator</h2>
+      <p style="font-size:.82rem;opacity:.8;margin-bottom:1.25rem">Know exactly how much you save every day going electric</p>
+      <button class="hbtn hbtn-g" onclick="showPage('contact')" style="margin:0 auto">Book Your Zelio Now</button>
+    </div>
+    <div class="cblock">
+      <div style="font-weight:700;font-size:.95rem;margin-bottom:.75rem">⚡ Charging Cost Estimator</div>
+      <div class="frow"><label class="flbl">Select Model</label><select class="finput" id="calcModel" onchange="calcCost()"><option value="1.54">Little Gracy (1.54 kWh)</option><option value="1.92" selected>Gracy i / Eeva (1.92 kWh)</option><option value="2.37">Eeva ZX+ / X Men 2.0 (2.37 kWh)</option><option value="2.66">Gracy i Max (2.66 kWh)</option></select></div>
+      <div class="frow"><label class="flbl">Daily Distance: <strong id="distVal">30 km</strong></label><input type="range" min="10" max="120" value="30" style="width:100%;accent-color:var(--g)" oninput="document.getElementById('distVal').textContent=this.value+' km';calcCost()"></div>
+      <div class="frow"><label class="flbl">Electricity Rate</label><select class="finput" id="calcRate" onchange="calcCost()"><option value="5">₹5.00/unit (Domestic)</option><option value="6" selected>₹6.00/unit (Standard)</option><option value="7">₹7.00/unit (Commercial)</option></select></div>
+      <div class="calc-row"><span>Full charge cost</span><span style="font-weight:600" id="rCharge">–</span></div>
+      <div class="calc-row"><span>Range per charge</span><span style="font-weight:600" id="rRange">–</span></div>
+      <div class="calc-row"><span>Monthly EV cost</span><span style="font-weight:600" id="rEvCost">–</span></div>
+      <div class="calc-row"><span>Petrol equiv. cost</span><span style="font-weight:600" id="rPetCost">–</span></div>
+      <div class="calc-row"><span>💰 Monthly Savings</span><span id="rSaving">–</span></div>
+    </div>
+    <div id="savBanner" style="display:none;background:linear-gradient(90deg,#052e16,#166534);color:#fff;border-radius:var(--r);padding:1.2rem;margin-bottom:.85rem;display:none;align-items:center;gap:1rem">
+      <div style="font-size:2.5rem;flex-shrink:0">💸</div>
+      <div><div style="font-size:.95rem;font-weight:800" id="savHead">–</div><div style="font-size:.78rem;opacity:.8" id="savSub">–</div></div>
+    </div>
+    <div class="cblock">
+      <div style="font-weight:700;font-size:.95rem;margin-bottom:.75rem">📊 Annual Savings</div>
+      <div class="calc-row"><span>Annual EV cost</span><span style="font-weight:600" id="rAnnEv">–</span></div>
+      <div class="calc-row"><span>Annual petrol cost</span><span style="font-weight:600" id="rAnnPet">–</span></div>
+      <div class="calc-row"><span>🌱 CO₂ saved/year</span><span style="font-weight:600" id="rCo2">–</span></div>
+      <div class="calc-row"><span>💰 Annual Savings</span><span id="rAnnSave">–</span></div>
+    </div>
+    <div class="tip-card"><div class="tip-icon">🌙</div><div><div style="font-size:.85rem;font-weight:700;margin-bottom:.2rem">Charge overnight</div><div style="font-size:.78rem;color:var(--muted);line-height:1.55">Cheaper, safer — scooter ready every morning.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🔌</div><div><div style="font-size:.85rem;font-weight:700;margin-bottom:.2rem">Standard 5-amp socket</div><div style="font-size:.78rem;color:var(--muted);line-height:1.55">No special charger needed — plug into any wall socket.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">⚡</div><div><div style="font-size:.85rem;font-weight:700;margin-bottom:.2rem">Only ₹0.40–₹0.60/km</div><div style="font-size:.78rem;color:var(--muted);line-height:1.55">vs ₹4–₹6/km for petrol scooters — 85% savings!</div></div></div>
+  </div>
+</div>
+
+<!-- ════ WISHLIST ════ -->
+<div class="page" id="page-wishlist">
+  <div class="pg-wrap">
+    <div class="sec-head" style="padding-left:0"><span>My Wishlist</span><span class="sec-count" id="wishCount">0 saved</span></div>
+    <div class="cards-grid" id="wishGrid"></div>
+    <div id="wishEmpty" style="text-align:center;padding:3rem 1rem;color:var(--muted)">
+      <div style="font-size:3rem;margin-bottom:.75rem">🤍</div>
+      <h3 style="font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.3rem">No saved models yet</h3>
+      <p style="font-size:.82rem">Tap ♡ on any card to save it here</p>
+      <button class="hbtn hbtn-g" onclick="showPage('home')" style="margin:.85rem auto 0;display:block">Browse Models</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ CONTACT ════ -->
+<div class="page" id="page-contact">
+  <div class="pg-wrap">
+    <div class="cblock">
+      <div class="cblock-title">📍 Starvolt EV – Contact</div>
+      <div class="citem">
+        <div class="cicon">📍</div>
+        <div>
+          <div class="ctext-lbl">Showroom Address</div>
+          <div class="ctext-val">Bhairpur, Jagatpur, Odisha</div>
+          <a href="https://maps.app.goo.gl/wg2P5rwNk2hXcF8RA" target="_blank" style="display:inline-flex;align-items:center;gap:.3rem;margin-top:.35rem;color:var(--g);font-size:.78rem;font-weight:700;text-decoration:none">🗺️ Get Directions →</a>
+        </div>
+      </div>
+      <div class="citem">
+        <div class="cicon">📞</div>
+        <div><div class="ctext-lbl">Mobile / WhatsApp</div><div class="ctext-val"><a href="tel:+917749984651">+91 77499 84651</a></div></div>
+      </div>
+      <div class="citem">
+        <div class="cicon">✉️</div>
+        <div><div class="ctext-lbl">Email</div><div class="ctext-val"><a href="mailto:starvolt.ev@gmail.com">starvolt.ev@gmail.com</a></div></div>
+      </div>
+      <div class="citem" style="border:none">
+        <div class="cicon">🕐</div>
+        <div><div class="ctext-lbl">Hours</div><div class="ctext-val">Mon – Sun &nbsp;|&nbsp; <strong>10:00 AM – 8:00 PM</strong><br><span style="font-size:.72rem;color:var(--g);font-weight:600">✅ Open all 7 days</span></div></div>
+      </div>
+    </div>
+    <div class="cblock">
+      <div class="cblock-title">🌐 Connect With Us</div>
+      <div class="srow"><a class="sbtn sbtn-wa" href="https://wa.me/917749984651" target="_blank">💬 WhatsApp</a><a class="sbtn sbtn-g" href="tel:+917749984651">📞 Call</a></div>
+      <div class="srow" style="margin-top:.55rem"><a class="sbtn sbtn-fb" href="https://www.facebook.com/Starvolt.ev1" target="_blank">f Facebook</a><a class="sbtn sbtn-ig" href="https://www.instagram.com/starvoltev01/" target="_blank">📸 Instagram</a></div>
+    </div>
+
+    <div class="form-card">
+      <div class="ftitle">🛵 Book a Free Test Ride</div>
+      <div class="fsub">Fill in your details — we'll call to confirm your slot.</div>
+      <div id="formSuccess" class="fsuccess"><div style="font-size:2.5rem;margin-bottom:.5rem">✅</div><h3 style="font-size:1rem;font-weight:800;color:var(--gd);margin-bottom:.25rem">Test Ride Booked!</h3><p style="font-size:.82rem;color:var(--muted)">Our team will call <strong id="confirmedPhone">you</strong> within 2 hours.</p><button class="hbtn hbtn-g" onclick="resetForm()" style="margin:.85rem auto 0;display:block">Book Another</button></div>
+      <div id="formFields">
+        <div class="frow"><label class="flbl">Full Name <span>*</span></label><input class="finput" id="fName" type="text" placeholder="Your full name" autocomplete="name"><div class="ferr" id="eNameErr">Please enter your name</div></div>
+        <div class="fgrid2">
+          <div class="frow"><label class="flbl">Mobile No. <span>*</span></label><input class="finput" id="fPhone" type="tel" placeholder="+91 XXXXX" maxlength="15" oninput="this.value=this.value.replace(/[^0-9+]/g,'')"><div class="ferr" id="ePhoneErr">Enter valid 10-digit number</div></div>
+          <div class="frow"><label class="flbl">City / Area <span>*</span></label><input class="finput" id="fCity" type="text" placeholder="Jagatpur…"><div class="ferr" id="eCityErr">Enter your city</div></div>
+        </div>
+        <div class="frow"><label class="flbl">Pin Code <span>*</span></label><input class="finput" id="fPin" type="tel" placeholder="754134" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')"><div class="ferr" id="ePinErr">Enter 6-digit pin code</div></div>
+        <div class="frow"><label class="flbl">Model Interested In</label><select class="finput" id="fModel"><option value="">-- Select a model --</option><option>Zelio Little Gracy</option><option>Zelio Gracy i</option><option>Zelio Eeva</option><option>Zelio Eeva ZX+</option><option>Zelio X Men 2.0</option><option>Zelio Legender</option><option>Not sure – need guidance</option></select></div>
+        <div class="frow"><label class="flbl">Preferred Date</label><input class="finput" id="fDate" type="date"></div>
+        <div class="frow"><label class="flbl">Message (optional)</label><textarea class="finput" id="fMsg" rows="3" placeholder="Any questions or preferred time…" style="resize:none"></textarea></div>
+        <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:9px;padding:.7rem;margin-bottom:.5rem;font-size:.78rem;color:#166534"><div style="font-weight:700;margin-bottom:.35rem">📬 Booking sent via:</div><div>💬 WhatsApp → +91 77499 84651</div><div>📧 Email → starvolt.ev@gmail.com</div></div>
+        <button class="fsubmit" id="fSubmit" onclick="submitForm()">⚡ Confirm Free Test Ride</button>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="ftitle">💬 General Enquiry</div>
+      <div class="fsub">Questions about EMI, pricing, or models?</div>
+      <div id="enquirySuccess" class="fsuccess"><div style="font-size:2.5rem;margin-bottom:.5rem">📨</div><h3 style="font-size:1rem;font-weight:800;color:var(--gd);margin-bottom:.25rem">Message Sent!</h3><p style="font-size:.82rem;color:var(--muted)">We'll reply within 24 hours.</p><button class="hbtn hbtn-g" onclick="resetEnquiry()" style="margin:.85rem auto 0;display:block">Send Another</button></div>
+      <div id="enquiryFields">
+        <div class="frow"><label class="flbl">Name <span>*</span></label><input class="finput" id="eName" type="text" placeholder="Your name"><div class="ferr" id="eEnqNameErr">Enter your name</div></div>
+        <div class="frow"><label class="flbl">Mobile No. <span>*</span></label><input class="finput" id="ePhone" type="tel" placeholder="+91 XXXXX" maxlength="15" oninput="this.value=this.value.replace(/[^0-9+]/g,'')"><div class="ferr" id="eEnqPhoneErr">Enter valid number</div></div>
+        <div class="frow"><label class="flbl">Message <span>*</span></label><textarea class="finput" id="eMsg" rows="3" placeholder="e.g. What is the EMI for Eeva ZX+?" style="resize:none"></textarea><div class="ferr" id="eEnqMsgErr">Enter your message</div></div>
+        <button class="fsubmit" onclick="submitEnquiry()">Send via WhatsApp 💬</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ ABOUT ════ -->
+<div class="page" id="page-about">
+  <div class="pg-wrap">
+
+    <div style="background:linear-gradient(135deg,#052e16,#166534);color:#fff;border-radius:var(--r);padding:1.5rem;text-align:center;margin-bottom:.85rem">
+      <div style="font-size:3rem;margin-bottom:.75rem">⚡</div>
+      <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:.3rem">Starvolt EVs</h2>
+      <p style="font-size:.82rem;opacity:.8">Authorised Zelio Electric Scooter Dealer<br>Bhairpur, Jagatpur, Odisha · Since 2023</p>
+      <p style="font-size:.73rem;opacity:.65;margin-top:.4rem">Drive the Future, Drive Starvolt</p>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.85rem">
+      <div class="about-stat"><div class="about-stat-num">6+</div><div class="about-stat-lbl">Zelio Models</div></div>
+      <div class="about-stat"><div class="about-stat-num">100+</div><div class="about-stat-lbl">Happy Customers</div></div>
+      <div class="about-stat"><div class="about-stat-num">Free</div><div class="about-stat-lbl">Test Ride</div></div>
+      <div class="about-stat"><div class="about-stat-num">7 Days</div><div class="about-stat-lbl">Open Always</div></div>
+    </div>
+
+    <!-- WARRANTY CARDS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.85rem">
+      <div style="background:linear-gradient(135deg,#1e3a5f,#1e4080);border-radius:12px;padding:1rem;text-align:center;color:#fff">
+        <div style="font-size:1.8rem;margin-bottom:.3rem">🛡️</div>
+        <div style="font-size:.88rem;font-weight:800;margin-bottom:.2rem">2 Year Warranty</div>
+        <div style="font-size:.7rem;opacity:.8;line-height:1.5">Motor, controller & frame — unlimited km</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#1e4d20,#166534);border-radius:12px;padding:1rem;text-align:center;color:#fff">
+        <div style="font-size:1.8rem;margin-bottom:.3rem">🔋</div>
+        <div style="font-size:.88rem;font-weight:800;margin-bottom:.2rem">4 Year Battery</div>
+        <div style="font-size:.7rem;opacity:.8;line-height:1.5">Samsung Li-Ion cells — industry best</div>
+      </div>
+    </div>
+    <div style="background:#fffbeb;border:1.5px solid #fcd34d;border-radius:10px;padding:.75rem 1rem;margin-bottom:.85rem;display:flex;align-items:center;gap:.75rem">
+      <span style="font-size:1.3rem;flex-shrink:0">⭐</span>
+      <div style="font-size:.8rem;color:#92400e;line-height:1.55"><strong>Samsung Battery Technology</strong> — Genuine Samsung Li-Ion cells delivering superior range, longer life & reliability. 4-year battery warranty included on select models.</div>
+    </div>
+
+    <!-- MAP -->
+    <div class="cblock" style="padding:0;overflow:hidden;margin-bottom:.85rem">
+      <div style="padding:.85rem 1rem .5rem;font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">📍 Find Us on Map</div>
+      <div style="position:relative">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14974.56!2d85.6346!3d20.6001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1909550d6a5b97%3A0x65c8ee5ec35e5af5!2sJagatpur%2C%20Odisha!5e0!3m2!1sen!2sin!4v1" width="100%" height="190" style="border:0;display:block" loading="lazy" title="Starvolt EV map"></iframe>
+        <div style="position:absolute;bottom:.75rem;left:50%;transform:translateX(-50%)">
+          <a href="https://maps.app.goo.gl/wg2P5rwNk2hXcF8RA" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;background:#fff;color:var(--g);border-radius:20px;padding:.42rem 1rem;font-size:.78rem;font-weight:700;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.2)">🗺️ Get Directions</a>
+        </div>
+      </div>
+      <div style="padding:.75rem 1rem .9rem;display:flex;align-items:center;justify-content:space-between">
+        <div><div style="font-size:.82rem;font-weight:700">📌 Starvolt EVs</div><div style="font-size:.72rem;color:var(--muted);margin-top:.1rem">Bhairpur, Jagatpur, Odisha</div></div>
+        <a href="https://maps.app.goo.gl/wg2P5rwNk2hXcF8RA" target="_blank" style="background:var(--g);color:#fff;border-radius:8px;padding:.42rem .9rem;font-size:.75rem;font-weight:700;text-decoration:none">Open Maps →</a>
+      </div>
+    </div>
+
+    <!-- TIMINGS -->
+    <div class="cblock" style="margin-bottom:.85rem">
+      <div class="cblock-title">🕐 Showroom Timings</div>
+      <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:.65rem .9rem;margin-bottom:.85rem;display:flex;align-items:center;gap:.6rem">
+        <span style="font-size:1.2rem">✅</span>
+        <div><div style="font-size:.83rem;font-weight:700;color:var(--gd)">Open All 7 Days a Week!</div><div style="font-size:.72rem;color:var(--muted)">No holidays — we are always here for you</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem" id="timingsGrid"></div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="cblock" style="padding:0;overflow:hidden;margin-bottom:.85rem">
+      <div style="padding:.85rem 1rem .5rem;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">📸 Happy Customer Deliveries</div>
+        <div style="font-size:.72rem;color:var(--g);font-weight:700">13 photos</div>
+      </div>
+      <div style="background:linear-gradient(90deg,#052e16,#166534);padding:.65rem 1rem;margin-bottom:.75rem;display:flex;align-items:center;gap:.75rem">
+        <div style="font-size:1.5rem;flex-shrink:0">🎉</div>
+        <div style="color:#fff"><div style="font-size:.82rem;font-weight:800">100+ Happy Deliveries & Counting!</div><div style="font-size:.7rem;opacity:.8">Real customers · Bhairpur, Jagatpur showroom</div></div>
+      </div>
+      <!-- SLIDESHOW -->
+      <div class="gal-slideshow" id="galShow">
+        <div class="gal-track" id="galTrack"></div>
+        <button class="gal-prev" onclick="galNav(-1)">‹</button>
+        <button class="gal-next" onclick="galNav(1)">›</button>
+        <div class="gal-dots" id="galDots"></div>
+        <div class="gal-counter" id="galCounter"></div>
+      </div>
+      <!-- THUMBNAILS -->
+      <div class="gal-thumbs" id="galThumbs"></div>
+      <div style="padding:.75rem 1rem .9rem;text-align:center">
+        <a href="https://drive.google.com/drive/folders/10uUQhq8x5v9yoN56vOEs0CfKEu9pHVIe" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;background:var(--gl);color:var(--gd);border-radius:8px;padding:.5rem 1rem;font-size:.78rem;font-weight:700;text-decoration:none">📁 View All on Google Drive</a>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="feat-item"><div class="feat-icon">🏆</div><div><div class="feat-title">Authorised Dealer</div><div class="feat-text">Official Zelio dealer — genuine parts, full manufacturer support, brand warranty.</div></div></div>
+    <div class="feat-item"><div class="feat-icon">🔧</div><div><div class="feat-title">On-Site Service Centre</div><div class="feat-text">Trained mechanics for routine service, battery checks and warranty repairs.</div></div></div>
+    <div class="feat-item"><div class="feat-icon">💳</div><div><div class="feat-title">Easy EMI & Finance</div><div class="feat-text">Kotak, LoanTap, Ecofy & more. Low down payment options available.</div></div></div>
+    <div class="feat-item"><div class="feat-icon">🌱</div><div><div class="feat-title">Save ₹2,000+/month</div><div class="feat-text">Cut fuel costs by 90%. Just ₹0.40–₹0.60/km vs ₹5+/km for petrol.</div></div></div>
+    <div class="feat-item" style="margin-bottom:.85rem"><div class="feat-icon">📋</div><div><div class="feat-title">No RTO Hassle*</div><div class="feat-text">Low-speed Zelio models (≤25 km/h) — no registration, no licence, no insurance.</div></div></div>
+
+    <!-- SOCIAL -->
+    <div class="cblock" style="text-align:center">
+      <div style="font-size:.78rem;color:var(--muted);margin-bottom:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em">Follow Starvolt EV</div>
+      <div class="srow"><a class="sbtn sbtn-fb" href="https://www.facebook.com/Starvolt.ev1" target="_blank">f Facebook</a><a class="sbtn sbtn-ig" href="https://www.instagram.com/starvoltev01/" target="_blank">📸 Instagram</a></div>
+      <div style="margin-top:.65rem"><a class="sbtn sbtn-wa" href="https://wa.me/917749984651" target="_blank" style="display:flex;justify-content:center">💬 Chat on WhatsApp</a></div>
+      <div style="margin-top:1.5rem;border-top:1px solid var(--border);padding-top:.85rem">
+        <div id="ownerTap" onclick="ownerTapFn()" style="cursor:pointer;opacity:.2;font-size:.68rem;color:var(--muted);user-select:none">⚡ Starvolt EV v3.0</div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<!-- DETAIL DRAWER -->
+<div class="overlay" id="detailOverlay" onclick="if(event.target===this)closeDetail()">
+  <div class="drawer"><div class="drw-handle"></div><button class="drw-close" onclick="closeDetail()">✕</button><div class="drw-inner" id="detailContent"></div></div>
+</div>
+
+<!-- LEAD MODAL -->
+<div class="overlay" id="leadOverlay">
+  <div class="drawer">
+    <div class="drw-handle"></div>
+    <div class="drw-inner" style="padding-top:.5rem">
+      <div style="text-align:center;margin-bottom:1rem"><div style="font-size:2.5rem">🛵</div><h2 style="font-size:1.1rem;font-weight:800;margin:.3rem 0 .2rem">Welcome to Starvolt EV!</h2><p style="font-size:.8rem;color:var(--muted)">Share your details to get exclusive offers & free test ride booking.</p></div>
+      <div class="frow"><label class="flbl">Your Name <span>*</span></label><input class="finput" id="lcName" type="text" placeholder="Full name"><div class="ferr" id="lcNameErr">Please enter your name</div></div>
+      <div class="frow"><label class="flbl">Mobile Number <span>*</span></label><input class="finput" id="lcPhone" type="tel" placeholder="+91 XXXXX XXXXX" maxlength="15" oninput="this.value=this.value.replace(/[^0-9+]/g,'')"><div class="ferr" id="lcPhoneErr">Enter valid 10-digit number</div></div>
+      <div class="frow"><label class="flbl">Your City / Location <span>*</span></label><input class="finput" id="lcCity" type="text" placeholder="Jagatpur, Cuttack…"><div class="ferr" id="lcCityErr">Please enter your city</div></div>
+      <div class="frow"><label class="flbl">Looking for…</label><select class="finput" id="lcInterest"><option value="">-- Select --</option><option>Just browsing</option><option>Want a test ride</option><option>Ready to buy</option><option>EMI / finance info</option></select></div>
+      <button class="fsubmit" onclick="submitLead()">⚡ Get Exclusive Offers</button>
+      <button onclick="skipLead()" style="width:100%;background:none;border:none;color:var(--muted);font-size:.8rem;padding:.5rem;cursor:pointer;font-family:inherit;margin-top:.3rem">Skip for now</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEADS LOG -->
+<div class="overlay" id="leadsOverlay" onclick="if(event.target===this)closeLeads()">
+  <div class="drawer" style="border-radius:20px 20px 0 0;max-height:95vh">
+    <div class="drw-handle"></div>
+    <button class="drw-close" onclick="closeLeads()">✕</button>
+    <div style="padding:0 1rem 2rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem"><div><div style="font-size:1rem;font-weight:800">📋 Lead Log</div><div style="font-size:.75rem;color:var(--muted)">All bookings & enquiries</div></div><button onclick="clearLeads()" style="background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:7px;padding:.35rem .75rem;font-size:.75rem;font-weight:600;cursor:pointer;font-family:inherit">Clear All</button></div>
+      <div id="leadsLog"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── VEHICLES ── */
+const vehicles=[
+  {id:1,name:'Zelio Little Gracy',tagline:'Most affordable · License-free · Budget pick',badge:'License Free',bt:'amber',tags:['lic-free'],colors:['#fff','#1a1a1a','#dc2626'],colorNames:['White','Black','Red'],img:'https://zelioebikes.com/wp-content/uploads/elementor/thumbs/img-hardware-5-mobile@2x-r2glm4kehvolt391uenh1tbjplbysonzhyjgrux4dg.webp',specs:{Motor:'48/60V BLDC',Battery:'Samsung Li-Ion 60V/30Ah (1.54 kWh)',Mileage:'60–90 km/charge',Speed:'25 km/h (Low Speed)',Charge:'8 hrs',Brakes:'Drum / Drum',Weight:'~80 kg'},url:'https://zelioebikes.com/little-gracy/',features:['No Licence','No RTO','Samsung Battery','Anti-Theft','USB Port','Keyless'],highlights:['60–90 km range','Samsung Li-Ion battery','License-free','No RTO required']},
+  {id:2,name:'Zelio Gracy i',tagline:'Family commuter · Best-seller · Up to 120 km',badge:'Popular',bt:'red',tags:['lic-free','popular','high-range'],colors:['#fff','#dc2626','#2563eb','#1a1a1a'],colorNames:['White','Red','Blue','Black'],img:'https://zelioebikes.com/wp-content/uploads/2025/09/Layer_3-removebg-preview.webp',specs:{Motor:'BLDC 250W',Battery:'Samsung Li-Ion / Lead (1.92–2.66 kWh)',Mileage:'55–120 km/charge',Speed:'25 km/h (Low Speed)',Charge:'4–9 hrs',Brakes:'Disc / Drum',Weight:'85 kg'},url:'https://zelioebikes.com/new-gracyi/',features:['No Licence','No RTO','Samsung Battery','Digital LCD','Electric Key','Anti-Theft'],highlights:['Up to 120 km range','Samsung Li-Ion battery','Disc brake front','Best-selling model']},
+  {id:3,name:'Zelio Eeva',tagline:'Smooth city ride · Stylish · 60–80 km range',badge:'City Pick',bt:'green',tags:['lic-free','lithium'],colors:['#fff','#dc2626','#16a34a','#1a1a1a'],colorNames:['White','Red','Green','Black'],img:'https://zelioebikes.com/wp-content/uploads/2025/09/Legenderphoto-1024x598.webp',specs:{Motor:'BLDC 250W',Battery:'Samsung Li-Ion 1.92 kWh',Mileage:'60–80 km/charge',Speed:'25 km/h (Low Speed)',Charge:'4–7 hrs',Brakes:'Drum / Drum',Weight:'80 kg'},url:'https://zelioebikes.com/eeva-best-electric-scooter-in-india/',features:['No Licence','No RTO','Samsung Battery','USB Port','Digital Speedo','Keyless'],highlights:['60–80 km range','Samsung Li-Ion battery','4 color options','License-free']},
+  {id:4,name:'Zelio Eeva ZX+',tagline:'Premium long-range · Lithium · Smart features',badge:'Best Value',bt:'green',tags:['lic-free','lithium','popular','high-range'],colors:['#fff','#3b82f6','#1a1a1a','#9ca3af'],colorNames:['White','Blue','Black','Grey'],img:'https://zelioebikes.com/wp-content/uploads/2024/10/1.webp',specs:{Motor:'BLDC 250W',Battery:'Samsung Li-Ion 74V/32Ah (2.37 kWh)',Mileage:'60–120 km/charge',Speed:'25 km/h (Low Speed)',Charge:'4–8 hrs',Brakes:'Disc / Drum',Weight:'82 kg'},url:'https://zelioebikes.com/eeva-zx-new/',features:['No Licence','No RTO','Samsung Battery','Disc Brake','Keyless Drive','Regen Braking'],highlights:['70–120 km range','Samsung Li-Ion battery','Disc + drum brakes','Keyless drive']},
+  {id:5,name:'Zelio X Men 2.0',tagline:'Sporty styling · Youth favourite · Dual disc',badge:'Sporty',bt:'blue',tags:['lic-free','lithium','popular','sporty'],colors:['#16a34a','#fff','#9ca3af','#dc2626'],colorNames:['Green','White','Silver','Red'],img:'https://zelioebikes.com/wp-content/uploads/2024/11/IMG-20241111-WA0004-removebg-preview.png',specs:{Motor:'BLDC 60/72V',Battery:'Samsung Li-Ion (up to 2.37 kWh)',Mileage:'55–100 km/charge',Speed:'25 km/h (Low Speed)',Charge:'4–10 hrs',Brakes:'Disc / Disc',Weight:'90 kg'},url:'https://zelioebikes.com/xmen-2-0/',features:['No Licence','No RTO','Samsung Battery','Dual Disc Brakes','LED Lights','USB Charger'],highlights:['Front+Rear Disc','Samsung Li-Ion battery','180 kg load capacity','Sporty design']},
+  {id:6,name:'Zelio Legender',tagline:'City smart · Premium · Up to 120 km range',badge:'Premium',bt:'blue',tags:['lic-free','lithium','high-range'],colors:['#fff','#1a1a1a','#dc2626'],colorNames:['White','Black','Red'],img:'https://zelioebikes.com/wp-content/uploads/2025/09/3-1024x672.webp',specs:{Motor:'BLDC',Battery:'Samsung Li-Ion (various)',Mileage:'100–120 km/charge',Speed:'25 km/h (Low Speed)',Charge:'4–9 hrs',Brakes:'Disc / Drum',Weight:'86 kg'},url:'https://zelioebikes.com/zelio-legender-electric-scooter/',features:['No Licence','No RTO','Samsung Battery','Digital Speedo','Keyless Drive','LED Headlamp'],highlights:['100–120 km range','Samsung Li-Ion battery','Keyless drive','Anti-theft alarm']}
+];
+
+/* ── GALLERY PHOTOS (13 real Google Drive photos) ── */
+const photos=[
+  {id:'1kEnO4p_NNURBcqN3p7pd33RqF8kdg0kq',cap:'Showroom reveal – new Zelio delivery 🎉'},
+  {id:'1CfzDY_VbCrmYAzXXRcBXbt1F0kKDzjnf',cap:'Happy customer with Zelio scooter 😊'},
+  {id:'1e_ySENCoT2-1ngtVquWTSkEy__riPAz8',cap:'Proud new Zelio owner 🛵'},
+  {id:'135CBhA0PDP54kMsHkC9y4OfCZcMe2VnP',cap:'Red Zelio Gracy i delivery ❤️'},
+  {id:'1cYCZ-H_tPSCcINyuyvKLjqBaP6KzqLFj',cap:'Zelio X Men 2.0 sporty delivery ⚡'},
+  {id:'1jizPkunMFqHGPgdVTCvMXBAhiFSbHDz7',cap:'Teal Zelio X-Luge delivery 💚'},
+  {id:'1A6rKorSsIslH81756QazmPbRCUwZIHOB',cap:'Black Zelio – elegant delivery 🖤'},
+  {id:'1K16d6E0T0-Y-oQNqJjdg9662lqknpo1x',cap:'Zelio X Men – powerful delivery 🏍️'},
+  {id:'1rXgn3_pxq0BpAT3WnTCjFwp2U7mFyrql',cap:'Family delivery – all smiles ❤️'},
+  {id:'1Bi-bAzpRRErGRmgoIiVTzLvt7j6zWkBJ',cap:'Zelio Eeva Eco delivery 🩶'},
+  {id:'1lgNV-z4PHQk02vDENupUO9k2IQSJgaBP',cap:'Zelio Eeva smooth delivery 🛵'},
+  {id:'1OR_vBsMUG4nvmNk9FVPeGHpRuk3XfN79',cap:'Special gift delivery 🎁'},
+  {id:'1OrTxEe4U5MHQJB37bQTmbyssW5Cv9Zgc',cap:'Happy family – Zelio delivery 😊'}
+];
+
+function dUrl(id,sz){return 'https://drive.google.com/thumbnail?id='+id+'&sz='+sz;}
+
+let galIdx=0,galTimer=null,wishlist=JSON.parse(localStorage.getItem('sv_wish')||'[]'),curFilter='all';
+
+/* ── INIT ── */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('gone');
+    renderCards(vehicles);
+    calcCost();
+    buildTimings();
+    buildGallery();
+    const fd=document.getElementById('fDate');
+    if(fd){const d=new Date();d.setDate(d.getDate()+1);fd.min=d.toISOString().split('T')[0];}
+    if(!localStorage.getItem('sv_lead_done')) setTimeout(()=>document.getElementById('leadOverlay').classList.add('open'),3500);
+    updateWishDot();
+  },1800);
+});
+
+/* ── TIMINGS ── */
+function buildTimings(){
+  const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  const today=new Date().toLocaleDateString('en-US',{weekday:'long',timeZone:'Asia/Kolkata'});
+  const g=document.getElementById('timingsGrid');
+  if(!g)return;
+  g.innerHTML=days.map(d=>{
+    const on=d===today;
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem .65rem;background:'+(on?'var(--gl)':'#f9fafb')+';border:1.5px solid '+(on?'var(--g)':'var(--border)')+';border-radius:9px">'
+      +'<span style="font-size:.78rem;font-weight:'+(on?700:500)+';color:'+(on?'var(--gd)':'var(--txt)')+'">'+d.slice(0,3)+(on?' 📍':'')+'</span>'
+      +'<span style="font-size:.75rem;font-weight:600;color:'+(on?'var(--g)':'var(--muted)')+'">10AM–8PM</span>'
+      +'</div>';
+  }).join('');
+}
+
+/* ── GALLERY ── */
+function buildGallery(){
+  const track=document.getElementById('galTrack');
+  const dots=document.getElementById('galDots');
+  const thumbs=document.getElementById('galThumbs');
+  if(!track)return;
+  photos.forEach((p,i)=>{
+    /* Slide */
+    const slide=document.createElement('div');
+    slide.className='gal-slide';
+    const img=document.createElement('img');
+    img.src=dUrl(p.id,'w800');
+    img.alt=p.cap;
+    img.loading=i===0?'eager':'lazy';
+    img.style.cssText='width:100%;height:260px;object-fit:cover;display:block';
+    img.onerror=function(){
+      this.remove();
+      const fb=document.createElement('div');
+      fb.className='gal-slide-fb';
+      fb.innerHTML='<div style="font-size:3rem">🛵</div><div style="color:rgba(255,255,255,.8);font-size:.8rem;text-align:center;padding:0 1rem">'+p.cap+'</div>';
+      slide.insertBefore(fb,slide.firstChild);
+    };
+    const cap=document.createElement('div');
+    cap.className='gal-cap';
+    cap.textContent=p.cap;
+    slide.appendChild(img);
+    slide.appendChild(cap);
+    track.appendChild(slide);
+    /* Dot */
+    const dot=document.createElement('button');
+    dot.className='gal-dot'+(i===0?' on':'');
+    dot.onclick=()=>goSlide(i);
+    dots.appendChild(dot);
+    /* Thumb */
+    const th=document.createElement('div');
+    th.className='gal-thumb'+(i===0?' on':'');
+    const ti=document.createElement('img');
+    ti.src=dUrl(p.id,'w100');
+    ti.alt=p.cap;
+    ti.loading='lazy';
+    ti.style.cssText='width:100%;height:100%;object-fit:cover';
+    ti.onerror=function(){this.parentNode.innerHTML='<div class="gal-thumb-fb">🛵</div>';};
+    th.appendChild(ti);
+    th.onclick=()=>goSlide(i);
+    thumbs.appendChild(th);
+  });
+  updateGal(0);
+  startGalTimer();
+  /* Swipe */
+  let tx=0;
+  track.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+  track.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40){dx<0?galNav(1):galNav(-1);}},{passive:true});
+}
+
+function updateGal(i){
+  galIdx=(i+photos.length)%photos.length;
+  const track=document.getElementById('galTrack');
+  const dots=document.getElementById('galDots');
+  const thumbs=document.getElementById('galThumbs');
+  const ctr=document.getElementById('galCounter');
+  if(track)track.style.transform='translateX(-'+galIdx+'00%)';
+  if(ctr)ctr.textContent=(galIdx+1)+' / '+photos.length;
+  if(dots)[...dots.children].forEach((d,j)=>{d.classList.toggle('on',j===galIdx);});
+  if(thumbs)[...thumbs.children].forEach((t,j)=>{t.classList.toggle('on',j===galIdx);});
+}
+function goSlide(i){updateGal(i);resetGalTimer();}
+function galNav(d){updateGal(galIdx+d);resetGalTimer();}
+function startGalTimer(){galTimer=setInterval(()=>updateGal(galIdx+1),3500);}
+function resetGalTimer(){clearInterval(galTimer);startGalTimer();}
+
+/* ── PAGE NAV ── */
+function showPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.bn').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  const b=document.getElementById('bn-'+p);if(b)b.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(p==='wishlist')renderWishlist();
+}
+
+/* ── FILTER ── */
+function setFilter(f,el){curFilter=f;document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');applyFilter(document.getElementById('searchBox').value.toLowerCase().trim());}
+function handleSearch(){applyFilter(document.getElementById('searchBox').value.toLowerCase().trim());}
+function applyFilter(q){let r=vehicles;if(curFilter!=='all')r=r.filter(v=>v.tags.includes(curFilter));if(q)r=r.filter(v=>v.name.toLowerCase().includes(q));renderCards(r);}
+
+/* ── CARDS ── */
+function renderCards(list){
+  const g=document.getElementById('cardsGrid'),nr=document.getElementById('noResults');
+  document.getElementById('modelCount').textContent=list.length+' available';
+  if(!list.length){g.innerHTML='';nr.style.display='block';return;}
+  nr.style.display='none';
+  g.innerHTML=list.map(v=>`
+    <div class="vcard" onclick="openDetail(${v.id})">
+      <div class="vcard-img">
+        <span class="vbadge ${v.bt}">${v.badge}</span>
+        <button class="vheart ${wishlist.includes(v.id)?'liked':''}" onclick="event.stopPropagation();toggleWish(${v.id},this)">${wishlist.includes(v.id)?'♥':'♡'}</button>
+        <img src="${v.img}" alt="${v.name}" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Zelio E Bikes</div>
+        <div class="vcard-name">${v.name}</div>
+        <div class="vcard-specs">
+          <div class="vspec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${v.specs.Mileage}</div>
+          <div class="vspec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>${v.specs.Speed}</div>
+          <div class="vspec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="16" height="11" rx="2"/><path d="M22 11v3"/></svg>Samsung Li-Ion</div>
+        </div>
+        <div class="vcard-acts">
+          <button class="vbtn vbtn-g" onclick="event.stopPropagation();bookRide(${v.id})">Book Ride</button>
+          <button class="vbtn vbtn-o" onclick="event.stopPropagation();openDetail(${v.id})">Details</button>
+        </div>
+      </div>
+      <div class="vcard-warranty">🛡️ 2yr Warranty &nbsp;·&nbsp; 🔋 4yr Samsung Battery</div>
+    </div>`).join('');
+}
+
+/* ── WISHLIST ── */
+function toggleWish(id,btn){const i=wishlist.indexOf(id);if(i===-1){wishlist.push(id);btn.innerHTML='♥';btn.classList.add('liked');toast('❤️ Saved to wishlist');}else{wishlist.splice(i,1);btn.innerHTML='♡';btn.classList.remove('liked');toast('Removed from wishlist');}localStorage.setItem('sv_wish',JSON.stringify(wishlist));updateWishDot();}
+function updateWishDot(){const d=document.getElementById('wishDot');if(d)d.classList.toggle('show',wishlist.length>0);const w=document.getElementById('wishCount');if(w)w.textContent=wishlist.length+' saved';}
+function renderWishlist(){
+  const w=vehicles.filter(v=>wishlist.includes(v.id));
+  const wc=document.getElementById('wishCount');if(wc)wc.textContent=w.length+' saved';
+  const we=document.getElementById('wishEmpty');if(we)we.style.display=w.length?'none':'block';
+  const g=document.getElementById('wishGrid');if(!g)return;
+  if(!w.length){g.innerHTML='';return;}
+  g.innerHTML=w.map(v=>`<div class="vcard" onclick="openDetail(${v.id})"><div class="vcard-img"><span class="vbadge ${v.bt}">${v.badge}</span><button class="vheart liked" onclick="event.stopPropagation();toggleWish(${v.id},this);renderWishlist()">♥</button><img src="${v.img}" alt="${v.name}" loading="lazy" onerror="this.style.display='none'"></div><div class="vcard-body"><div class="vcard-brand">Zelio E Bikes</div><div class="vcard-name">${v.name}</div><div class="vcard-specs"><div class="vspec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${v.specs.Mileage}</div></div><div class="vcard-acts"><button class="vbtn vbtn-g" onclick="event.stopPropagation();bookRide(${v.id})">Book Ride</button><button class="vbtn vbtn-o" onclick="event.stopPropagation();openDetail(${v.id})">Details</button></div></div><div class="vcard-warranty">🛡️ 2yr Warranty &nbsp;·&nbsp; 🔋 4yr Samsung Battery</div></div>`).join('');
+}
+
+/* ── DETAIL ── */
+function openDetail(id){
+  const v=vehicles.find(x=>x.id===id);if(!v)return;
+  const specs=Object.entries(v.specs).map(([k,val])=>'<div class="spec-box"><div class="spec-lbl">'+k+'</div><div class="spec-val">'+val+'</div></div>').join('');
+  const cols=v.colors.map((c,i)=>'<div class="cdot '+(i===0?'sel':'')+'" style="width:26px;height:26px;border-radius:50%;border:2.5px solid #fff;box-shadow:0 0 0 '+(i===0?'2.5':'1.5')+'px '+(i===0?'var(--g)':'var(--border)')+';background:'+c+';cursor:pointer" title="'+v.colorNames[i]+'" onclick="this.parentNode.querySelectorAll(\'div\').forEach(d=>{d.style.boxShadow=\'0 0 0 1.5px var(--border)\'});this.style.boxShadow=\'0 0 0 2.5px var(--g)\'"></div>').join('');
+  document.getElementById('detailContent').innerHTML=
+    '<div class="d-img"><img src="'+v.img+'" alt="'+v.name+'" onerror="this.innerHTML=\'<div style=\\\'font-size:5rem;text-align:center\\\'>🛵</div>\'"></div>'+
+    '<div class="d-brand">Zelio E Bikes · Starvolt EVs, Jagatpur</div>'+
+    '<div class="d-name">'+v.name+'</div>'+
+    '<div class="d-tag">'+v.tagline+'</div>'+
+    '<div class="d-warranty-row"><div class="d-warranty-box blue"><div class="wi">🛡️</div><strong>2 Year Warranty</strong><span>Motor · Frame · Controller<br>Unlimited km</span></div><div class="d-warranty-box green"><div class="wi">🔋</div><strong>4 Year Battery</strong><span>Samsung Li-Ion cells<br>Industry best</span></div></div>'+
+    '<div class="d-chips">'+v.features.map(f=>'<span class="d-chip">✓ '+f+'</span>').join('')+'</div>'+
+    '<div style="font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem">Key Highlights</div>'+
+    '<div class="d-chips" style="margin-bottom:1rem">'+v.highlights.map(h=>'<span class="d-chip" style="background:#eff6ff;color:#1d4ed8">⚡ '+h+'</span>').join('')+'</div>'+
+    '<div style="font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem">Full Specifications</div>'+
+    '<div class="spec-grid">'+specs+'</div>'+
+    '<div style="margin-bottom:1rem"><div style="font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem">Available Colours</div><div style="display:flex;gap:.5rem;flex-wrap:wrap">'+cols+'</div></div>'+
+    '<div class="d-ctas"><button class="d-cta d-cta-g" onclick="closeDetail();bookRide('+v.id+')">🛵 Book Free Test Ride</button><a class="d-cta d-cta-w" href="'+v.url+'" target="_blank" rel="noopener">🔗 Zelio Info</a></div>'+
+    '<div style="text-align:center;margin-top:.85rem"><a href="https://wa.me/917749984651?text=Hi%20Starvolt%20EV!%20I%27m%20interested%20in%20'+encodeURIComponent(v.name)+'." target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;background:#25d366;color:#fff;border-radius:10px;padding:.6rem 1.25rem;font-size:.85rem;font-weight:700;text-decoration:none">💬 Enquire on WhatsApp</a></div>';
+  document.getElementById('detailOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');document.body.style.overflow='';}
+function bookRide(id){const v=vehicles.find(x=>x.id===id);showPage('contact');setTimeout(()=>{const s=document.getElementById('fModel');if(s&&v)s.value=v.name;document.querySelector('.form-card').scrollIntoView({behavior:'smooth'});},200);}
+
+/* ── FORMS ── */
+function val(id,eid,check){const el=document.getElementById(id),e=document.getElementById(eid),ok=check(el.value.trim());el.classList.toggle('err',!ok);e.classList.toggle('show',!ok);return ok;}
+function submitForm(){
+  if(!val('fName','eNameErr',v=>v.length>1)||!val('fPhone','ePhoneErr',v=>v.replace(/\D/g,'').length>=10)||!val('fCity','eCityErr',v=>v.length>1)||!val('fPin','ePinErr',v=>v.length===6))return;
+  const btn=document.getElementById('fSubmit');btn.disabled=true;btn.textContent='Sending…';
+  const n=document.getElementById('fName').value.trim(),p=document.getElementById('fPhone').value.trim(),c=document.getElementById('fCity').value.trim(),pin=document.getElementById('fPin').value.trim(),m=document.getElementById('fModel').value||'Not specified',d=document.getElementById('fDate').value||'Flexible',msg=document.getElementById('fMsg').value.trim()||'–',now=new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+  const fd=new FormData();['_subject','_template','_captcha','Name','Mobile','City','Pin','Model','Date','Message','Time'].forEach((k,i)=>fd.append(k,['🛵 New Test Ride – Starvolt EV','table','false',n,p,c,pin,m,d,msg,now][i]));
+  fetch('https://formsubmit.co/ajax/starvolt.ev@gmail.com',{method:'POST',body:fd}).catch(()=>{});
+  try{const l=JSON.parse(localStorage.getItem('sv_leads')||'[]');l.unshift({name:n,phone:p,city:c,pin,model:m,date:d,msg,time:now,type:'Test Ride'});localStorage.setItem('sv_leads',JSON.stringify(l.slice(0,100)));}catch(e){}
+  const wa=encodeURIComponent('🛵 *NEW TEST RIDE BOOKING*\n━━━━━━━━━━━━\n👤 *Name:* '+n+'\n📞 *Mobile:* '+p+'\n📍 *City:* '+c+'\n🏠 *Pin:* '+pin+'\n🛵 *Model:* '+m+'\n📅 *Date:* '+d+'\n💬 *Note:* '+msg+'\n━━━━━━━━━━━━\n🕐 '+now+'\n🌐 Starvolt EV Website');
+  setTimeout(()=>{document.getElementById('confirmedPhone').textContent=p;document.getElementById('formFields').style.display='none';document.getElementById('formSuccess').classList.add('show');window.open('https://wa.me/917749984651?text='+wa,'_blank');toast('✅ Booking sent via WhatsApp & Email!');},900);
+}
+function resetForm(){document.getElementById('formFields').style.display='block';document.getElementById('formSuccess').classList.remove('show');const b=document.getElementById('fSubmit');b.disabled=false;b.textContent='⚡ Confirm Free Test Ride';['fName','fPhone','fCity','fPin','fModel','fDate','fMsg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
+function submitEnquiry(){
+  if(!val('eName','eEnqNameErr',v=>v.length>1)||!val('ePhone','eEnqPhoneErr',v=>v.replace(/\D/g,'').length>=10)||!val('eMsg','eEnqMsgErr',v=>v.length>4))return;
+  const n=document.getElementById('eName').value.trim(),p=document.getElementById('ePhone').value.trim(),msg=document.getElementById('eMsg').value.trim(),now=new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+  const fd=new FormData();['_subject','_template','_captcha','Name','Mobile','Message','Time'].forEach((k,i)=>fd.append(k,['💬 New Enquiry – Starvolt EV','table','false',n,p,msg,now][i]));
+  fetch('https://formsubmit.co/ajax/starvolt.ev@gmail.com',{method:'POST',body:fd}).catch(()=>{});
+  try{const l=JSON.parse(localStorage.getItem('sv_leads')||'[]');l.unshift({name:n,phone:p,city:'–',pin:'–',model:'Enquiry',date:'–',msg,time:now,type:'Enquiry'});localStorage.setItem('sv_leads',JSON.stringify(l.slice(0,100)));}catch(e){}
+  const wa=encodeURIComponent('💬 *NEW ENQUIRY*\n━━━━━━━━━━━━\n👤 *Name:* '+n+'\n📞 *Mobile:* '+p+'\n💬 *Message:* '+msg+'\n━━━━━━━━━━━━\n🕐 '+now);
+  document.getElementById('enquiryFields').style.display='none';document.getElementById('enquirySuccess').classList.add('show');window.open('https://wa.me/917749984651?text='+wa,'_blank');toast('📨 Enquiry sent!');
+}
+function resetEnquiry(){document.getElementById('enquiryFields').style.display='block';document.getElementById('enquirySuccess').classList.remove('show');['eName','ePhone','eMsg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
+function submitLead(){
+  if(!val('lcName','lcNameErr',v=>v.length>1)||!val('lcPhone','lcPhoneErr',v=>v.replace(/\D/g,'').length>=10)||!val('lcCity','lcCityErr',v=>v.length>1))return;
+  const n=document.getElementById('lcName').value.trim(),p=document.getElementById('lcPhone').value.trim(),c=document.getElementById('lcCity').value.trim(),int=document.getElementById('lcInterest').value||'Not specified',now=new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+  const fd=new FormData();['_subject','_template','_captcha','Name','Mobile','City','Interest','Time'].forEach((k,i)=>fd.append(k,['🌟 New Lead – Starvolt EV','table','false',n,p,c,int,now][i]));
+  fetch('https://formsubmit.co/ajax/starvolt.ev@gmail.com',{method:'POST',body:fd}).catch(()=>{});
+  try{const l=JSON.parse(localStorage.getItem('sv_leads')||'[]');l.unshift({name:n,phone:p,city:c,pin:'–',model:int,date:'–',msg:'–',time:now,type:'Lead'});localStorage.setItem('sv_leads',JSON.stringify(l.slice(0,100)));}catch(e){}
+  localStorage.setItem('sv_lead_done','1');document.getElementById('leadOverlay').classList.remove('open');
+  window.open('https://wa.me/917749984651?text='+encodeURIComponent('🌟 *NEW LEAD*\n👤 '+n+'\n📞 '+p+'\n📍 '+c+'\n💡 '+int+'\n🕐 '+now),'_blank');
+  toast('✅ Welcome! We\'ll be in touch soon.');
+}
+function skipLead(){localStorage.setItem('sv_lead_done','1');document.getElementById('leadOverlay').classList.remove('open');}
+
+/* ── CALC ── */
+function calcCost(){
+  const kWh=parseFloat(document.getElementById('calcModel').value)||1.92;
+  const rate=parseFloat(document.getElementById('calcRate').value)||6;
+  const slider=document.querySelector('#page-charging input[type=range]');
+  const dist=slider?parseInt(slider.value)||30:30;
+  const range=Math.round(kWh*55),chM=Math.ceil(dist*30/range),chC=+(kWh*rate).toFixed(2),evM=Math.round(chM*chC),petM=Math.round(dist*30*(105/40)),sav=petM-evM;
+  const f=n=>'₹'+n.toLocaleString('en-IN');
+  document.getElementById('rCharge').textContent=f(chC);
+  document.getElementById('rRange').textContent=range+' km approx';
+  document.getElementById('rEvCost').textContent=f(evM)+'/mo';
+  document.getElementById('rPetCost').textContent=f(petM)+'/mo';
+  document.getElementById('rSaving').textContent=f(sav)+'/month';
+  document.getElementById('rAnnEv').textContent=f(evM*12);
+  document.getElementById('rAnnPet').textContent=f(petM*12);
+  document.getElementById('rCo2').textContent=Math.round(dist*365*0.097)+' kg';
+  document.getElementById('rAnnSave').textContent=f((petM-evM)*12)+'/year';
+  const b=document.getElementById('savBanner');
+  if(b){b.style.display=sav>0?'flex':'none';if(sav>0){document.getElementById('savHead').textContent='You save '+f(sav)+'/month!';document.getElementById('savSub').textContent='Annual saving of '+f((petM-evM)*12)+' by switching to Zelio.';}}
+}
+
+/* ── TOAST ── */
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('up');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('up'),3000);}
+
+/* ── LEADS LOG ── */
+let tapC=0,tapT=null;
+function ownerTapFn(){tapC++;if(tapT)clearTimeout(tapT);tapT=setTimeout(()=>tapC=0,2000);if(tapC>=5){tapC=0;openLeads();}}
+function openLeads(){
+  const leads=JSON.parse(localStorage.getItem('sv_leads')||'[]');
+  const box=document.getElementById('leadsLog');
+  const summ='<div style="background:linear-gradient(90deg,#052e16,#166534);color:#fff;border-radius:10px;padding:.85rem 1rem;margin-bottom:.85rem;display:flex;justify-content:space-around;text-align:center">'
+    +'<div><div style="font-size:1.2rem;font-weight:800">'+leads.length+'</div><div style="font-size:.7rem;opacity:.8">Total</div></div>'
+    +'<div><div style="font-size:1.2rem;font-weight:800">'+leads.filter(l=>l.type==='Test Ride').length+'</div><div style="font-size:.7rem;opacity:.8">Test Rides</div></div>'
+    +'<div><div style="font-size:1.2rem;font-weight:800">'+leads.filter(l=>l.type==='Enquiry').length+'</div><div style="font-size:.7rem;opacity:.8">Enquiries</div></div>'
+    +'<div><div style="font-size:1.2rem;font-weight:800">'+leads.filter(l=>l.type==='Lead').length+'</div><div style="font-size:.7rem;opacity:.8">Leads</div></div>'
+    +'</div>';
+  box.innerHTML=summ+(!leads.length?'<div style="text-align:center;padding:2rem;color:var(--muted)">📭 No leads yet</div>':leads.map(l=>'<div style="background:#f9fafb;border:1px solid var(--border);border-radius:10px;padding:.85rem;margin-bottom:.6rem"><div style="display:flex;justify-content:space-between;margin-bottom:.35rem"><span style="background:'+(l.type==='Test Ride'?'#dcfce7':l.type==='Lead'?'#fef9c3':'#dbeafe')+';color:'+(l.type==='Test Ride'?'#166534':l.type==='Lead'?'#854d0e':'#1d4ed8')+';font-size:.65rem;font-weight:700;padding:.15rem .5rem;border-radius:5px">'+(l.type==='Test Ride'?'🛵 Test Ride':l.type==='Lead'?'🌟 Lead':'💬 Enquiry')+'</span><span style="font-size:.65rem;color:var(--muted)">'+l.time+'</span></div><div style="font-weight:700;margin-bottom:.15rem">'+l.name+'</div><div style="font-size:.8rem;color:var(--muted);margin-bottom:.1rem">📞 <a href="tel:'+l.phone+'" style="color:var(--g);font-weight:600">'+l.phone+'</a></div>'+(l.city&&l.city!=='–'?'<div style="font-size:.75rem;color:var(--muted)">📍 '+l.city+(l.pin&&l.pin!=='–'?' – '+l.pin:'')+'</div>':'')+(l.model&&l.model!=='Enquiry'?'<div style="font-size:.75rem;color:var(--muted)">🛵 '+l.model+'</div>':'')+(l.msg&&l.msg!=='–'?'<div style="font-size:.75rem;color:var(--txt);margin-top:.3rem;font-style:italic">"'+l.msg+'"</div>':'')+'<div style="display:flex;gap:.4rem;margin-top:.6rem"><a href="tel:'+l.phone+'" style="flex:1;background:var(--g);color:#fff;border-radius:7px;padding:.4rem;text-align:center;font-size:.75rem;font-weight:700;text-decoration:none">📞 Call</a><a href="https://wa.me/91'+l.phone.replace(/\D/g,'').slice(-10)+'?text=Hi%20'+encodeURIComponent(l.name)+'%2C%20Starvolt%20EV%20here!" target="_blank" style="flex:1;background:#25d366;color:#fff;border-radius:7px;padding:.4rem;text-align:center;font-size:.75rem;font-weight:700;text-decoration:none">💬 WhatsApp</a></div></div>').join(''));
+  document.getElementById('leadsOverlay').classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLeads(){document.getElementById('leadsOverlay').classList.remove('open');document.body.style.overflow='';}
+function clearLeads(){if(confirm('Clear all leads?')){localStorage.removeItem('sv_leads');closeLeads();toast('🗑️ Cleared');}}
+</script>
+</body>
+</html>
